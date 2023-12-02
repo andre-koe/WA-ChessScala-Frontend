@@ -1,0 +1,119 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Medium.ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-MediumItalic.ttf');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Light.ttf');
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-LightItalic.ttf');
+    font-weight: 300;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Thin.ttf');
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-ThinItalic.ttf');
+    font-weight: 100;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Black.ttf');
+    font-weight: 900;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-BlackItalic.ttf');
+    font-weight: 900;
+    font-style: italic;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', 'sans-serif';
+}
+
+body {
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.scrollbar-styling::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.scrollbar-styling::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.scrollbar-styling::-webkit-scrollbar-thumb {
+    background: blue;
+    border-radius: 10px;
+    transition: background 0.5s ease;
+}
+
+.scrollbar-styling::-webkit-scrollbar-thumb:hover {
+    background: #007bff;
+}
+
+@keyframes shimmer {
+    0% { background-position: -20px; }
+    100% { background-position: 20px; }
+}
+
+.scrollbar-styling:not(:hover)::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(0,123,255,0.8) 50%, rgba(255,255,255,0) 100%);
+    background-size: 20px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+.floating-label {
+    position: relative;
+    padding-top: 14px;
+}
+
+.floating-label input {
+    border: 1px solid #ddd;
+    border-radius: -1.5rem;
+    padding: 9px 15px;
+    width: 99%;
+}
+
+.floating-label label {
+    position: absolute;
+    top: 24px;
+    left: 14px;
+    transition: all -1.2s;
+    padding: -1 5px;
+}
+
+.floating-label input:focus~label,
+.floating-label input:not(:placeholder-shown)~label {
+    top: -11px;
+    font-size: -1.75rem;
+    background-color: transparent;
+}

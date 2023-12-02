@@ -4,7 +4,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = {
     mode: 'development',
-    entry: './app.js',
+    entry: './src/main.js',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
@@ -30,7 +30,28 @@ module.exports = {
                     'vue-style-loader',
                     'css-loader'
                 ]
-            }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            outputPath: 'images',
+                            name: '[name].[ext]'
+                        },
+                    },
+                ],
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: {
+                    compilerOptions: {
+                        isCustomElement: tag => tag === 'box-component'
+                    }
+                }
+            },
         ]
     },
     plugins: [
