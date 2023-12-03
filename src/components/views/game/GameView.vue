@@ -2,7 +2,8 @@
 import { Chess } from "chess.js";
 import { ChessBoardBuilder } from "/src/js/ChessboardBuilder.js"
 import { SinglePlayer } from '/src/js/Singleplayer.js'
-import PromotionModal from "./promotion_modal/PromotionModal.vue";
+import { OnlineMultiplayer } from '/src/js/OnlineMultiplayer.js'
+import PromotionModal from "./modals/PromotionModal.vue";
 
 </script>
 <template>
@@ -32,8 +33,20 @@ export default {
         },
         isModalVisisble() {
             return this.$store.state.isPromotionModalVisible;
+        },
+        team() {
+            this.$store.state.team;
+        },
+        gameMode() {
+            return this.$store.state.gameMode;
+        },
+        gameId() {
+            return this.$store.state.gameId;
+        },
+        playerId() {
+            return this.$store.state.playerId;
         }
-    },
+    }, 
     methods: {
         handleShowPromotionSelect(event) {
             this.move = event.detail.move;
@@ -42,23 +55,20 @@ export default {
         closeModal() {
             this.$store.commit('setPromotionModalVisisble', false);
         },
-        team() {
-            this.$store.state.team;
-        },
-        gameMode() {
-            return this.$store.state.gameMode;
-        }
     },
     mounted() {
         window.addEventListener('show-promotion-select', this.handleShowPromotionSelect);
         if (this.gameMode === 'singleplayer') {
             new SinglePlayer(this.team === "w" ? "w" : "b")
+            console.log("SinglePlayer Game")
         } else if (this.gameMode === 'local') {
             let chess = new Chess()
             let chessBoardBuilder = new ChessBoardBuilder(chess)
             chessBoardBuilder.createChessBoard(document.querySelector("#Chessboard"), true)
+            console.log("Local Game")
         } else if (this.gameMode === 'online') {
-            multiplayer = new OnlineMultiplayer();
+            this.multiplayer = new OnlineMultiplayer(this.playerId, this.gameId);
+            console.log("Multiplayer Game")
         }
     },
     beforeUnmount() {
@@ -66,7 +76,7 @@ export default {
         if (this.multiplayer != null) {
             this.multiplayer.destroy();
             this.multiplayer = null;
-        }
+        } 
     }
 };
 </script>

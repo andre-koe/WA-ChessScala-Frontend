@@ -6,6 +6,8 @@ export class ConnectionHandler
     message_stack = [];
     updateFunction;
     chatMessageHandler;
+    websocket_url = process.env.VUE_APP_WS_API_URL;
+    http_url = process.env.VUE_APP_HTTP_API_URL;
 
     constructor(updateFunction, chatMessageHandler) {
         this.updateFunction = updateFunction
@@ -17,7 +19,7 @@ export class ConnectionHandler
     }
 
     async requestPlayerId() {
-        const result = await $.get(process.env.SCALA_APP_API_URL + "/online_multiplayer/new_game")
+        const result = await $.get(this.http_url + "/online_multiplayer/new_game")
         document.cookie = "PlayerID=" + result.PlayerID + "; path=/";
         document.cookie = "GameID=" + result.GameID + "; path=/";
         document.cookie = "color=w" + "; path=/";
@@ -43,7 +45,7 @@ export class ConnectionHandler
     }
 
     async connectToWebSocket(playerID) {
-        this.socket = new WebSocket("ws://" + process.env.SCALA_APP_API_URL + "/websocket");
+        this.socket = new WebSocket(this.websocket_url);
 
         try {
             await this.waitForSocketOpen(this.socket);
@@ -70,7 +72,7 @@ export class ConnectionHandler
 
     async requestGameSession(){
         const playerID = this.getCookie("PlayerID")
-        return await $.post(process.env.SCALA_APP_API_URL + "online_multiplayer/join_game", {PlayerID: playerID})
+        return await $.post(this.http_url + "/online_multiplayer/join_game", {PlayerID: playerID})
     }
 
 

@@ -72,6 +72,9 @@ export default {
         },
         hasPlayerId() {
             return this.$store.state.playerId;
+        },
+        isPlaying() {
+            return this.$store.state.isPlaying;
         }
     },
     methods: {
@@ -79,7 +82,7 @@ export default {
             this.$emit('close');
         },
         startGame(gameMode, resume = false) {
-            if (this.$store.state.isPlaying) {
+            if (this.isPlaying) {
                 this.$store.commit('setGameId', null);
                 this.$store.commit('setIsPlaying', false);
                 if (!resume) {

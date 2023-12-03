@@ -48,6 +48,9 @@ const store = createStore({
         setGameId(state, gameId) {
             state.gameId = gameId;
         },
+        setTeam(state, team) {
+            state.team = team;
+        },
         setPlayerId(state, playerId) {
             state.playerId = playerId;
         },

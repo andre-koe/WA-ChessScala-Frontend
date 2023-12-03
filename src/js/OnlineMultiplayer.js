@@ -1,16 +1,18 @@
 import { ConnectionHandler } from "./ConnectionHandler.js";
-import { Chess } from "./chess.js";
-import { ChessBoardBuilder } from "./ChessBoardBuilder.js";
+import { Chess } from "chess.js";
 import { Chessboard } from "./Chessboard.js";
+import { ChessBoardBuilder } from "./ChessboardBuilder.js";
 
-class ChessGame {
+export class OnlineMultiplayer {
     constructor(playerID = null, gameID = null) {
         this.connectionHandler = new ConnectionHandler(this.proofMove.bind(this), this.handleIncomingChatMessage.bind(this));
         this.chess = new Chess();
         this.chessBoard = null;
         this.color = null;
+        this.playerID = playerID;
+        this.gameID = gameID;
 
-        if (this.connectionHandler.getCookie("PlayerID") && this.connectionHandler.getCookie("GameID") && this.connectionHandler.getCookie("color")) {
+        if (this.playerID && this.gameID) {
             this.use_existing_game();
         } else {
             this.start_new_game();
@@ -82,13 +84,13 @@ class ChessGame {
     }
 }
 
-// Instanz der Klasse erstellen und initialisieren
-const chessGame = new ChessGame();
-
 // Event-Listener
+/*
 document.getElementById("messageButton").addEventListener('click', () => {
     if (!chessGame.playerID) return;
     chessGame.connectionHandler.sendMessage(chessGame.playerID, document.getElementById("meinTextfeld").value);
 });
 
+
+*/
 let gameIdClipboard 
