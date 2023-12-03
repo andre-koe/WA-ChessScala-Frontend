@@ -19,17 +19,17 @@ export default {
         InformationModal
     },
     computed: {
-        darkModeEnabled() {
+        theme() {
             return this.$store.state.darkModeEnabled;
         },
         modalClasses() {
             if (this.activeModal === null) {
                 return '';
             } else {
-                let classes = this.darkModeEnabled ? 'bg-slate-800/80 text-white border-white-300' : 'bg-white/80 text-gray-800 border-slate-800';
+                let classes = this.theme ? 'bg-slate-800/80 text-white border-white-300' : 'bg-white/80 text-gray-800 border-slate-800';
                 return `${classes} absolute top-[20%] left-[50%] translate-x-[-50%] z-20 border-2 rounded-lg shadow-xl min-w-[30%] max-w-[60%] max-h-[60%] overflow-y-auto content-area`
             }
-             
+
         },
         activeModal() {
             return this.$store.state.activeModal;
@@ -45,12 +45,12 @@ export default {
     overflow-y: auto;
 
     &::-webkit-scrollbar {
-        width: 6px; /* Anpassung der Scrollbar-Breite */
+        width: 6px;
     }
 
     &::-webkit-scrollbar-track {
         background: transparent;
-        border-radius: 0 8px 8px 0; /* Abgerundete Ecken auf der rechten Seite des Tracks */
+        border-radius: 0 8px 8px 0;
     }
 
     &::-webkit-scrollbar-thumb {

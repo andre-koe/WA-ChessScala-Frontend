@@ -9,13 +9,19 @@ import store from './store';
 import tooltip from './directives/tooltip';
 import './assets/styles/styles.scss';
 import './components/html-components/BoxBackgroundComponent';
+import VueCookies from 'vue3-cookies';
 
 
 
 library.add(faHouse, faPlayCircle, faInfoCircle, faCircleUser, faMessage, faTableList,
     faLightbulb, rfaLightbulb, faRightToBracket, faDiscord, faGithub, faGoogle, faChessKnight, faChessBishop, faChessQueen, faChessRook);
 
-const app = createApp(App).use(store).directive('tooltip', tooltip).component('font-awesome-icon', FontAwesomeIcon);
+const app = createApp(App).use(store).use(VueCookies, {
+    expireTimes: "30d",
+    secure: true,
+    path: ""
+}).directive('tooltip', tooltip).component('font-awesome-icon', FontAwesomeIcon);
 
 app.config.compilerOptions.isCustomElement = tag => tag === 'box-component';
+app.config.globalProperties.$cookies.config('7d');
 app.mount("#app");

@@ -35,6 +35,9 @@
                 <div v-else>
                     <button @click="joinGame(gameID)" class="btn">Join Game</button>
                 </div>
+                <div v-if="hasPlayerId" class="mt-2">
+                    <button @click="resumeGame()" class="btn">Resume Game</button>
+                </div>
             </div>
         </div>
     </div>
@@ -61,23 +64,47 @@ export default {
         };
     },
     computed: {
-        darkModeEnabled() {
+        theme() {
             return this.$store.state.darkModeEnabled;
         },
         inputFieldClasses() {
-            return `${this.darkModeEnabled ? 'bg-slate-600' : ''} w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`
+            return `${this.theme ? 'bg-slate-600' : ''} w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`
         },
+        hasPlayerId() {
+            return this.$store.state.playerId;
+        }
     },
     methods: {
         close() {
             this.$emit('close');
         },
-        startGame(gameMode) {
-            this.$store.state.activeModal = null;
-            this.$store.state.isPlaying = true;
-            this.$store.state.gameMode = gameMode;
-            this.$store.state.team = this.isWhite === true ? "w" : "b";
+        startGame(gameMode, resume = false) {
+            if (this.$store.state.isPlaying) {
+                this.$store.commit('setGameId', null);
+                this.$store.commit('setIsPlaying', false);
+                if (!resume) {
+                    this.$store.commit('setPlayerId', null);
+                    this.$store.commit('setGameMode', '');
+                }
+                setTimeout(() => {
+                    this.startNewGame(gameMode);
+                }, 100);
+            } else {
+                this.startNewGame(gameMode);
+            }
         },
+        startNewGame(gameMode) {
+            this.$store.commit('setActiveModal', null);
+            this.$store.commit('setIsPlaying', true);
+            this.$store.commit('setGameMode', gameMode);
+            this.$store.commit('setTeam', this.isWhite === true ? "w" : "b");
+        },
+        joinGame(gameId) {
+            this.$store.commit('setGameId', gameId);
+        },
+        resumeGame() {
+            this.startGame('online', true);
+        }
     },
 };
 </script>

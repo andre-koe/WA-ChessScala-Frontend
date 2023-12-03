@@ -1,4 +1,6 @@
 import { createStore } from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+
 
 const store = createStore({
     state: {
@@ -7,7 +9,11 @@ const store = createStore({
         activeModal: null,
         isPlaying: false,
         gameMode: '',
+        gameId: '',
+        playerId: '',
         team: '',
+        localMultiplayerFEN: null,
+        singlePlayerFEN: null,
         isPromotionModalVisible: false
     },
     mutations: {
@@ -35,18 +41,35 @@ const store = createStore({
         },
         showPromotionModal(state, isVisible) {
             state.isPromotionModalVisible = isVisible;
+        },
+        setTheme(state, isDarkTheme) {
+            state.darkModeEnabled = isDarkTheme;
+        },
+        setGameId(state, gameId) {
+            state.gameId = gameId;
+        },
+        setPlayerId(state, playerId) {
+            state.playerId = playerId;
+        },
+        setLocalMultiplayerFEN(state, fen) {
+            state.localMultiplayerFEN = fen;
+        },
+        setSinglePlayerFEN(state, fen) {
+            state.singlePlayerFEN = fen;
         }
     },
     actions: {
         login({ commit }) {
-            // Login Logik
             commit('setLoggedIn', true);
         },
         logout({ commit }) {
-            // Logout Logik
             commit('setLoggedIn', true);
         }
-    }
+    },
+    plugins: [createPersistedState({
+        paths: ['isLoggedIn', 'darkModeEnabled', 'playerId', "team", "localMultiplayerFEN", "singlePlayerFEN"], 
+        storage: window.sessionStorage
+    })]
 });
 
 export default store;

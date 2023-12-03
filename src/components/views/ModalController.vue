@@ -31,11 +31,11 @@
 <script>
 export default {
     computed: {
-        darkModeEnabled() {
+        theme() {
             return this.$store.state.darkModeEnabled;
         },
         textColorClasses() {
-            return this.darkModeEnabled ? 'text-white' : 'text-gray-800';
+            return this.theme ? 'text-white' : 'text-gray-800';
         },
         iconClasses() {
             return `${this.textColorClasses} drop-shadow-icon sm:text-xl md:text-3xl 2xl:text-5xl hover:scale-110 hover:cursor-pointer hover:drop-shadow-icon-dark z-10`;
