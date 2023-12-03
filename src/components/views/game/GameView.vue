@@ -67,7 +67,7 @@ export default {
             chessBoardBuilder.createChessBoard(document.querySelector("#Chessboard"), true)
             console.log("Local Game")
         } else if (this.gameMode === 'online') {
-            this.multiplayer = new OnlineMultiplayer(this.playerId, this.gameId);
+            this.multiplayer = new OnlineMultiplayer(this.playerId, this.gameId, this.$store);
             console.log("Multiplayer Game")
         }
     },

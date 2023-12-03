@@ -12,6 +12,7 @@ const store = createStore({
         gameId: '',
         playerId: '',
         team: '',
+        multiplayer_team: '',
         localMultiplayerFEN: null,
         singlePlayerFEN: null,
         isPromotionModalVisible: false
@@ -51,6 +52,9 @@ const store = createStore({
         setTeam(state, team) {
             state.team = team;
         },
+        setMultiplayerTeam(state, team) {
+            state.multiplayer_team = team;
+        },
         setPlayerId(state, playerId) {
             state.playerId = playerId;
         },
@@ -70,7 +74,7 @@ const store = createStore({
         }
     },
     plugins: [createPersistedState({
-        paths: ['isLoggedIn', 'darkModeEnabled', 'playerId', "team", "localMultiplayerFEN", "singlePlayerFEN"], 
+        paths: ['isLoggedIn', 'darkModeEnabled', 'playerId', "team", "multiplayer_team", "localMultiplayerFEN", "singlePlayerFEN"], 
         storage: window.sessionStorage
     })]
 });

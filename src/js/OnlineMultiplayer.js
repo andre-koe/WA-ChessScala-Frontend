@@ -4,13 +4,14 @@ import { Chessboard } from "./Chessboard.js";
 import { ChessBoardBuilder } from "./ChessboardBuilder.js";
 
 export class OnlineMultiplayer {
-    constructor(playerID = null, gameID = null) {
+    constructor(playerID = null, gameID = null, vue_store) {
         this.connectionHandler = new ConnectionHandler(this.proofMove.bind(this), this.handleIncomingChatMessage.bind(this));
         this.chess = new Chess();
         this.chessBoard = null;
         this.color = null;
         this.playerID = playerID;
         this.gameID = gameID;
+        this.vue_store = vue_store;
 
         if (this.playerID && this.gameID) {
             this.use_existing_game();
@@ -24,24 +25,26 @@ export class OnlineMultiplayer {
         this.playerID = player_info.playerId;
         this.gameID = player_info.gameId;
         this.color = player_info.color;
+        this.vue_store.commit("setPlayerId", this.playerID)
+        this.vue_store.commit("setGameId", this.gameID)
+        this.vue_store.commit("setMultiplayerTeam", this.color)
         await this.connectionHandler.connectToWebSocket(this.playerID);
         const chessboardBuilder = new ChessBoardBuilder(this.chess, 'w', this.update.bind(this));
-        document.cookie += "; color=w";
-        this.chessBoard = chessboardBuilder.createChessBoard(document.querySelector("#Chessboard"), true);
+        this.chessBoard = chessboardBuilder.createChessBoard(document.querySelector("#Chessboard"), true, 'w');
     }
 
     async use_existing_game() {
         const game_info = await this.connectionHandler.requestGameSession();
-        this.playerID = this.connectionHandler.getCookie("PlayerID");
-        this.gameID = this.connectionHandler.getCookie("GameID");
-        this.color = this.connectionHandler.getCookie("color");
+        this.playerID = this.vue_store.state.playerId
+        this.gameID = this.vue_store.state.gameId
+        this.color = this.vue_store.state.multiplayer_team
         if (game_info.Success === false) {
             await this.start_new_game();
             return;
         }
         this.chess.load(game_info.FEN);
         const chessboardBuilder = new ChessBoardBuilder(this.chess, this.color, this.update.bind(this));
-        this.chessBoard = chessboardBuilder.createChessBoard(document.querySelector("#Chessboard"), true);
+        this.chessBoard = chessboardBuilder.createChessBoard(document.querySelector("#Chessboard"), true, this.color);
         await this.connectionHandler.connectToWebSocket(this.playerID);
     }
 
@@ -83,14 +86,3 @@ export class OnlineMultiplayer {
         this.connectionHandler.destroy();
     }
 }
-
-// Event-Listener
-/*
-document.getElementById("messageButton").addEventListener('click', () => {
-    if (!chessGame.playerID) return;
-    chessGame.connectionHandler.sendMessage(chessGame.playerID, document.getElementById("meinTextfeld").value);
-});
-
-
-*/
-let gameIdClipboard 

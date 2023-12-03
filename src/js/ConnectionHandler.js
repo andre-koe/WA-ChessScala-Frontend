@@ -20,9 +20,6 @@ export class ConnectionHandler
 
     async requestPlayerId() {
         const result = await $.get(this.http_url + "/online_multiplayer/new_game")
-        document.cookie = "PlayerID=" + result.PlayerID + "; path=/";
-        document.cookie = "GameID=" + result.GameID + "; path=/";
-        document.cookie = "color=w" + "; path=/";
         return {
             playerId: result.PlayerID,
             gameId: result.GameID,
@@ -71,17 +68,9 @@ export class ConnectionHandler
     }
 
     async requestGameSession(){
-        const playerID = this.getCookie("PlayerID")
         return await $.post(this.http_url + "/online_multiplayer/join_game", {PlayerID: playerID})
     }
 
-
-    getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return null
-    }
 
     sendMessage(playerID, message) {
         this.socket.send(JSON.stringify({"type": "message", "PlayerID": playerID, "message": message}))
