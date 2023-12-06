@@ -8,8 +8,9 @@
     "watch": "webpack --watch",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
+    "lint": "vue-cli-service lint",
+    "electron": "electron electron-main.js"
+    },
   "repository": {
     "type": "git",
     "url": "tba"
@@ -46,7 +47,9 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
+    "electron": "^28.0.0",
     "jquery": "^3.7.1",
     "postcss": "^8.4.31",
     "postcss-loader": "^7.3.3",

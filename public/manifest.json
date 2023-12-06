@@ -1,0 +1,16 @@
+{
+    "short_name": "Chess",
+    "name": "chess.scala",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#000000",
+    "background_color": "#FFFFFF",
+    "icons": [
+      {
+        "src": "src/assets/images/chess.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      }
+    ]
+  }
+  
