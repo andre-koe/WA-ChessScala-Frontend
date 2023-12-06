@@ -1,5 +1,5 @@
 import { Chess } from "chess.js";
-import { ChessBoardBuilder } from "./ChessboardBuilder";
+import { ChessBoardBuilder } from './ChessboardBuilder'
 
 export class SinglePlayer {
     constructor(team = "default") {

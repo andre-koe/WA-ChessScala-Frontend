@@ -10,6 +10,7 @@ export class ChessBoardBuilder {
 
     constructor(chess, team = "default", update = null) {
         this.#team = team
+        console.log("constructor-team: ", this.#team)
         this.#chess = chess
         this.#updateFunction = update
         window.addEventListener('piece-selected', this.handlePieceSelected);
@@ -38,6 +39,7 @@ export class ChessBoardBuilder {
             return this.#chess.get(field)
         }
         this.#chessboard.isSelectable = field => {
+            console.log(this.#team);
             if (this.#team === 'w') {
                 return this.#chess.get(field.id).color === 'w' && this.#chess.turn() === 'w'
             }

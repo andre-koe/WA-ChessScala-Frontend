@@ -1,5 +1,5 @@
 <template>
-    <div :class="[this.darkModeEnabled ? 'bg-gray-900 text-black' : 'bg-gray-600 text-white', `fixed inset-0 bg-opacity-50 overflow-y-auto h-full w-full z-30 backdrop-blur-sm rounded-lg`]">
+    <div :class="[this.theme ? 'bg-gray-900 text-black' : 'bg-gray-600 text-white', `fixed inset-0 bg-opacity-50 overflow-y-auto h-full w-full z-30 backdrop-blur-sm rounded-lg`]">
         <div :class="[`relative top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center content-center`]">
             <h3 :class="[`font-bold text-3xl tracking-widest uppercase mb-2`]">Promotion</h3>
             <div class="flex justify-space-around">
@@ -35,11 +35,11 @@ export default {
         };
     },
     computed: {
-        isDarkModeEnabled() {
+        theme() {
             return this.$store.state.darkModeEnabled;
         },
         iconColor() {
-            return `${this.isDarkModeEnabled ? 'text-white' : 'text-black'}`
+            return `${this.theme ? 'text-white' : 'text-black'}`
         }
     },
     methods: {
