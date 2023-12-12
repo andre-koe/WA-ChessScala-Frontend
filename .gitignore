@@ -1,1 +1,6 @@
 node_modules
+heroku/*
+!heroku/composer.json
+!heroku/composer.lock
+!heroku/index.php
+!heroku/procfile
